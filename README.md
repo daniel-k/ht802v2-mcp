@@ -29,13 +29,6 @@ Add to your `.claude/settings.json`:
 HT802_HOST=192.168.1.1 HT802_PASSWORD=secret uv run ht802v2-mcp
 ```
 
-### PEX executable
-
-```sh
-tox -e pex
-HT802_HOST=192.168.1.1 HT802_PASSWORD=secret ./dist/ht802v2-mcp.pex
-```
-
 ### Environment Variables
 
 | Variable | Default | Description |
@@ -122,7 +115,6 @@ Requires Python 3.13+ and [uv](https://docs.astral.sh/uv/).
 uv sync                  # install dependencies
 tox -e lint              # run ruff linter
 tox -e format            # check formatting
-tox -e pex               # build single-file executable
 ```
 
 ## License

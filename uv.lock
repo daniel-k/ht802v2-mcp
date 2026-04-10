@@ -515,7 +515,6 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "pex" },
     { name = "ruff" },
     { name = "tox" },
     { name = "tox-ini-fmt" },
@@ -530,7 +529,6 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "pex", specifier = ">=2.91.4" },
     { name = "ruff", specifier = ">=0.15.7" },
     { name = "tox", specifier = ">=4.50.3" },
     { name = "tox-ini-fmt", specifier = ">=1.7.1" },
@@ -881,16 +879,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/72/55/b748445cb4ea6b125626f15379be7c96d1035d4fa3e8fee362fa92298abf/pathable-0.5.0.tar.gz", hash = "sha256:d81938348a1cacb525e7c75166270644782c0fb9c8cecc16be033e71427e0ef1", size = 16655, upload-time = "2026-02-20T08:47:00.748Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/52/96/5a770e5c461462575474468e5af931cff9de036e7c2b4fea23c1c58d2cbe/pathable-0.5.0-py3-none-any.whl", hash = "sha256:646e3d09491a6351a0c82632a09c02cdf70a252e73196b36d8a15ba0a114f0a6", size = 16867, upload-time = "2026-02-20T08:46:59.536Z" },
-]
-
-[[package]]
-name = "pex"
-version = "2.92.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/16/83/d6cc12a73a93c9eeb7b2e25b5fc3429175f5fb6b97ed402867834539ffbe/pex-2.92.1.tar.gz", hash = "sha256:760eaa58beb9d882531f41891b3a63dfa7da3a02d314094b45fdaa4ee2dcef6e", size = 5276931, upload-time = "2026-04-06T23:06:23.82Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ff/49/77a16c87b24d3a05a3d98009fa5fc8447cfbfab7c1a85b5b5c7e32befb06/pex-2.92.1-py2.py35.py36.py37.py38.py39.py310.py311-none-any.whl", hash = "sha256:62f28a39737ebd700320c03a3d833c0b91803f1275f6d6d13fa4728c6076a2a1", size = 3970101, upload-time = "2026-04-06T23:06:20.1Z" },
-    { url = "https://files.pythonhosted.org/packages/ee/c1/5e5d23dd33cd63667443eff6246998394ae9c3f4cb39cf1b6d0c1bb95763/pex-2.92.1-py3.py312-none-any.whl", hash = "sha256:9ad8a8f9b90083b177fd0933b187af0cf3d27f7163fe17288b310089ba43848a", size = 1769723, upload-time = "2026-04-06T23:06:22.029Z" },
 ]
 
 [[package]]
