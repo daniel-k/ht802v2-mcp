@@ -104,7 +104,8 @@ class HT802Client:
     def _ensure_session(self) -> aiohttp.ClientSession:
         if self._session is None or self._session.closed:
             connector = aiohttp.TCPConnector(ssl=self._verify_ssl if self._verify_ssl else False)
-            self._session = aiohttp.ClientSession(connector=connector)
+            cookie_jar = aiohttp.CookieJar(unsafe=True)  # Allow cookies from IP addresses
+            self._session = aiohttp.ClientSession(connector=connector, cookie_jar=cookie_jar)
         return self._session
 
     async def close(self) -> None:
