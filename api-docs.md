@@ -3,7 +3,7 @@
 Device: HT802V2, Firmware: 1.0.9.3, MAC: 00:11:22:33:44:55
 Base URL: `http://<device-ip>`
 
-All API endpoints are under `/cgi-bin/`. Authentication is session-token based.
+All API endpoints are under `/cgi-bin/`. Authentication requires both a `session_token` parameter and a `session_id` cookie.
 
 ---
 
@@ -24,6 +24,15 @@ username=admin&P2=<base64-encoded-password>
 | `P2`       | string | Base64-encoded password      |
 
 **Response:**
+
+The response includes both a JSON body and a `Set-Cookie` header. **Both are required** for subsequent authenticated requests.
+
+Response header:
+```
+Set-Cookie: session_id=85769d9612e;
+```
+
+Response body:
 ```json
 {
   "response": "success",
@@ -35,6 +44,8 @@ username=admin&P2=<base64-encoded-password>
   }
 }
 ```
+
+> **Important:** The device validates sessions using the `session_id` **cookie**, not just the `session_token` parameter. Requests that include a valid `session_token` but omit the cookie will fail with `{"response": "error", "body": {}}` or `{"response": "error", "body": {"reason": "invalid session"}}`. When using `aiohttp`, the cookie jar must be created with `unsafe=True` to accept cookies from IP addresses (the default `CookieJar` silently rejects them per RFC 2965).
 
 ---
 
@@ -1951,10 +1962,10 @@ From the config, codec numeric values used in P57-P62, P850-P852 etc.:
 
 ## Notes for MCP Server Implementation
 
-1. **Authentication flow:** POST to `/cgi-bin/dologin` -> get `session_token` -> include in all subsequent requests
-2. **Reading settings:** Use `POST /cgi-bin/api.values.get` with `request=P1:P2:P3&session_token=<token>`
-3. **Session keep-alive:** POST `/cgi-bin/api-phone_operation` with `cmd=extend` every ~10s (the UI polls at this rate)
-4. **Session check:** GET `/cgi-bin/api-get_sessioninfo` to verify session validity
+1. **Authentication flow:** POST to `/cgi-bin/dologin` -> store the `session_token` from the JSON body **and** the `session_id` cookie from the `Set-Cookie` header -> include both in all subsequent requests. The cookie is essential; without it, all requests return "error" or "invalid session" even with a valid token.
+2. **Cookie caveat:** The `session_id` cookie is set by an IP address, not a hostname. HTTP clients that enforce RFC 2965 cookie domain rules (e.g. Python `aiohttp.CookieJar`) will silently discard it. Use permissive/unsafe cookie handling when the device is accessed by IP.
+3. **Session expiry:** Sessions time out after ~10-15 minutes of inactivity. Rather than polling keep-alive, it is simpler to detect errors and re-authenticate on demand.
+4. **Reading settings:** Use `POST /cgi-bin/api.values.get` with `request=P1:P2:P3&session_token=<token>`
 5. **Bulk config download:** GET `/cgi-bin/download_cfg` returns all 1798 P-values as text, GET `/cgi-bin/download_cfg_xml` for XML format
 6. **All values are strings** in the JSON responses, even numeric ones
 7. **Virtual fields** (non-P-prefixed like `mac_display`, `serial_number`, `cpu_load`, `net_cable_status`, etc.) are computed/status fields that can also be requested via `api.values.get`
