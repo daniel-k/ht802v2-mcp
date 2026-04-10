@@ -73,15 +73,6 @@ class ApplyStatus(BaseModel):
     )
 
 
-class SessionInfo(BaseModel):
-    """Current session validity status."""
-
-    session_timeout: str = Field(
-        description="'true' if the session has timed out, 'false' otherwise."
-    )
-    session_id_expired: str = Field(
-        description="'true' if the session ID has expired, 'false' otherwise."
-    )
 
 
 class DeviceTime(BaseModel):

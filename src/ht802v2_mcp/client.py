@@ -13,7 +13,7 @@ from .models import (
     DeviceTime,
     NetworkStatus,
     PortStatus,
-    SessionInfo,
+
     SystemInfo,
     SystemProcessInfo,
 )
@@ -225,21 +225,6 @@ class HT802Client:
         if isinstance(result, dict) and result.get("response") == "success":
             return result["body"]
         raise HT802Error(f"Failed to get values: {result}")
-
-    # --- session management ---
-
-    async def extend_session(self) -> None:
-        """Send keep-alive to extend the session."""
-        await self._authed_post("api-phone_operation", {"arg": "", "cmd": "extend"})
-
-    async def get_session_info(self) -> SessionInfo:
-        """Check session validity."""
-        result = await self._authed_get("api-get_sessioninfo")
-        r = result["results"][0]
-        return SessionInfo(
-            session_timeout=r["session_timeout"],
-            session_id_expired=r["session_id_expired"],
-        )
 
     # --- system info ---
 

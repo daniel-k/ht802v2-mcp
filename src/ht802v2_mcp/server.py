@@ -11,7 +11,7 @@ from .models import (
     DeviceTime,
     NetworkStatus,
     PortStatus,
-    SessionInfo,
+
     SystemInfo,
     SystemProcessInfo,
 )
@@ -133,24 +133,6 @@ async def get_values(parameters: list[str]) -> dict[str, str] | str:
     except HT802Error as e:
         return _err(e)
 
-
-@mcp.tool()
-async def get_session_info() -> SessionInfo | str:
-    """Check current session validity: whether session has timed out or expired."""
-    try:
-        return await _get_client().get_session_info()
-    except HT802Error as e:
-        return _err(e)
-
-
-@mcp.tool()
-async def extend_session() -> str:
-    """Send keep-alive to extend the current session."""
-    try:
-        await _get_client().extend_session()
-        return "Session extended."
-    except HT802Error as e:
-        return _err(e)
 
 
 @mcp.tool()
