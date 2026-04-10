@@ -11,3 +11,4 @@ wheels/
 
 .tox
 .*cache
+.mcp.json
