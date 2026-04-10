@@ -49,6 +49,8 @@ HT802_HOST=192.168.1.1 HT802_PASSWORD=secret ./dist/ht802v2-mcp.pex
 
 ## Available Tools
 
+### Device Status
+
 | Tool | Description |
 |------|-------------|
 | `get_system_info` | Model, serial, MAC, firmware versions, uptime, CPU load |
@@ -58,9 +60,27 @@ HT802_HOST=192.168.1.1 HT802_PASSWORD=secret ./dist/ht802v2-mcp.pex
 | `get_device_time` | Current device clock |
 | `get_apply_status` | Whether a reboot/apply is pending |
 | `get_system_process_info` | ATA process memory, provisioning status, core dump |
+
+### Port Settings
+
+Each tool takes a `port` argument (1 or 2).
+
+| Tool | Description |
+|------|-------------|
+| `get_port_general` | SIP server, user ID, auth, NAT, DNS, outbound proxy |
+| `get_port_sip` | Registration, transport, timers, session, keep-alive |
+| `get_port_codec` | Vocoder priority, DTMF, RTP, jitter buffer, SRTP, fax |
+| `get_port_analog_line` | Impedance, caller ID, loop current, hook flash, ring |
+| `get_port_call_settings` | Dial plan, auto-dial, call waiting, caller ID, timeouts |
+| `get_port_advanced` | Special feature, SIP security, certificate auth |
+| `get_port_call_features` | DND, call forwarding, call waiting, transfer star-codes |
+| `get_port_ring_tone` | Custom ring tones, ring cadences, call waiting tones |
+
+### Utilities
+
+| Tool | Description |
+|------|-------------|
 | `get_values` | Read arbitrary P-parameters by name |
-| `get_session_info` | Session timeout/expiry status |
-| `extend_session` | Send keep-alive to extend the session |
 | `reboot` | Reboot the device (~60s downtime) |
 
 ## Device API Overview
@@ -70,8 +90,9 @@ The HT802 V2 web UI is a Vue.js SPA backed by a JSON HTTP API under `/cgi-bin/`.
 ### Authentication
 
 Login via `POST /cgi-bin/dologin` with the password base64-encoded in the `P2` field.
-Returns a session token (MD5 hex string) included in all subsequent requests.
-Sessions time out after ~15 minutes of inactivity; the UI polls keep-alive every ~10s.
+Returns a session token (MD5 hex string) and a `session_id` cookie — both must be
+included in all subsequent requests. Sessions time out after ~15 minutes of inactivity;
+the MCP client re-authenticates automatically on expiry.
 
 ### P-Parameters
 
