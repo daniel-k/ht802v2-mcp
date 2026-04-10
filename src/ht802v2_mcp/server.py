@@ -10,8 +10,15 @@ from .models import (
     BaseInfo,
     DeviceTime,
     NetworkStatus,
+    PortAdvancedSettings,
+    PortAnalogLineSettings,
+    PortCallFeatures,
+    PortCallSettings,
+    PortCodecSettings,
+    PortGeneralSettings,
+    PortRingToneSettings,
+    PortSIPSettings,
     PortStatus,
-
     SystemInfo,
     SystemProcessInfo,
 )
@@ -133,6 +140,115 @@ async def get_values(parameters: list[str]) -> dict[str, str] | str:
     except HT802Error as e:
         return _err(e)
 
+
+
+# ===================================================================
+# PORT SETTINGS
+# ===================================================================
+
+
+@mcp.tool()
+async def get_port_general(port: int) -> PortGeneralSettings | str:
+    """Get general settings for a port: SIP server, user ID, auth, NAT, DNS, outbound proxy.
+
+    Args:
+        port: FXS port number (1 or 2).
+    """
+    try:
+        return await _get_client().get_port_general(port)
+    except HT802Error as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def get_port_sip(port: int) -> PortSIPSettings | str:
+    """Get SIP protocol settings for a port: registration, transport, timers, session, keep-alive.
+
+    Args:
+        port: FXS port number (1 or 2).
+    """
+    try:
+        return await _get_client().get_port_sip(port)
+    except HT802Error as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def get_port_codec(port: int) -> PortCodecSettings | str:
+    """Get codec settings for a port: vocoder priority, DTMF, RTP, jitter buffer, SRTP, fax.
+
+    Args:
+        port: FXS port number (1 or 2).
+    """
+    try:
+        return await _get_client().get_port_codec(port)
+    except HT802Error as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def get_port_analog_line(port: int) -> PortAnalogLineSettings | str:
+    """Get analog line settings for a port: impedance, caller ID, loop current, hook flash, ring.
+
+    Args:
+        port: FXS port number (1 or 2).
+    """
+    try:
+        return await _get_client().get_port_analog_line(port)
+    except HT802Error as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def get_port_call_settings(port: int) -> PortCallSettings | str:
+    """Get call settings for a port: dial plan, auto-dial, call waiting, caller ID, timeouts.
+
+    Args:
+        port: FXS port number (1 or 2).
+    """
+    try:
+        return await _get_client().get_port_call_settings(port)
+    except HT802Error as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def get_port_advanced(port: int) -> PortAdvancedSettings | str:
+    """Get advanced settings for a port: special feature, SIP security, certificate auth.
+
+    Args:
+        port: FXS port number (1 or 2).
+    """
+    try:
+        return await _get_client().get_port_advanced(port)
+    except HT802Error as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def get_port_call_features(port: int) -> PortCallFeatures | str:
+    """Get call feature star-codes for a port: DND, call forwarding, call waiting, transfer codes.
+
+    Args:
+        port: FXS port number (1 or 2).
+    """
+    try:
+        return await _get_client().get_port_call_features(port)
+    except HT802Error as e:
+        return _err(e)
+
+
+@mcp.tool()
+async def get_port_ring_tone(port: int) -> PortRingToneSettings | str:
+    """Get ring tone settings for a port: custom ring tones, ring cadences, call waiting tones.
+
+    Args:
+        port: FXS port number (1 or 2).
+    """
+    try:
+        return await _get_client().get_port_ring_tone(port)
+    except HT802Error as e:
+        return _err(e)
 
 
 @mcp.tool()
