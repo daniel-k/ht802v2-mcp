@@ -20,34 +20,45 @@ ApiInt = Annotated[int, BeforeValidator(_to_int)]
 
 @dataclass(frozen=True, slots=True)
 class P:
-    """P-parameter annotation: maps a model field to port 1 / port 2 P-params."""
+    """P-parameter annotation mapping a model field to device parameter(s).
+
+    Single param (1:1 mapping):  P("P89")
+    Port-dependent (1:2 mapping): P("P271", "P401")
+    """
 
     p1: str
-    p2: str
+    p2: str | None = None
 
 
-def port_params(model: type[BaseModel], port: int) -> list[str]:
-    """Extract the P-parameter names for the given port from an annotated model."""
-    idx = "p1" if port == 1 else "p2"
-    params: list[str] = []
-    for field_info in model.model_fields.values():
-        for meta in field_info.metadata:
-            if isinstance(meta, P):
-                params.append(getattr(meta, idx))
-                break
-    return params
+def _get_p(p: P, port: int | None) -> str:
+    """Resolve a P annotation to the concrete param name for the given port."""
+    if p.p2 is None or port is None or port == 1:
+        return p.p1
+    return p.p2
 
 
-def port_values(model: type[BaseModel], port: int, values: dict[str, str]) -> dict[str, str]:
-    """Map fetched P-parameter values back to field names using model annotations."""
-    idx = "p1" if port == 1 else "p2"
-    result: dict[str, str] = {}
+def _iter_p(model: type[BaseModel]):
+    """Yield (field_name, P) pairs for all P-annotated fields in a model."""
     for name, field_info in model.model_fields.items():
         for meta in field_info.metadata:
             if isinstance(meta, P):
-                result[name] = values.get(getattr(meta, idx), "")
+                yield name, meta
                 break
-    return result
+
+
+def model_params(model: type[BaseModel], port: int | None = None) -> list[str]:
+    """Extract P-parameter names from an annotated model.
+
+    For 1:1 models, call without port.  For port-dependent models, pass port=1 or 2.
+    """
+    return [_get_p(p, port) for _, p in _iter_p(model)]
+
+
+def model_values(
+    model: type[BaseModel], values: dict[str, str], port: int | None = None,
+) -> dict[str, str]:
+    """Map fetched P-parameter values back to field names."""
+    return {name: values.get(_get_p(p, port), "") for name, p in _iter_p(model)}
 
 
 # --- Enums ---
@@ -136,56 +147,55 @@ class CallerIDDisplay(IntEnum):
 class SystemInfo(BaseModel):
     """Device identity, firmware versions, and runtime status from the Status > System Info page."""
 
-    product_model: str = Field(description="Product model name, e.g. 'HT802V2'. (P89)")
-    serial_number: str = Field(description="Device serial number.")
-    hardware_version: str = Field(description="Hardware revision, e.g. 'V1.0A'. (P917)")
-    factory_config_version: str = Field(
+    product_model: Annotated[str, P("P89")] = Field(description="Product model name, e.g. 'HT802V2'.")
+    serial_number: Annotated[str, P("serial_number")] = Field(description="Device serial number.")
+    hardware_version: Annotated[str, P("P917")] = Field(description="Hardware revision, e.g. 'V1.0A'.")
+    factory_config_version: Annotated[str, P("tmp_fact_cfg_ver_str")] = Field(
         description="Factory configuration version string, e.g. '9610009410A'."
     )
-    program_version: str = Field(description="Program (application) firmware version. (P68)")
-    boot_version: str = Field(description="Bootloader firmware version. (P69)")
-    core_version: str = Field(description="Core firmware version. (P70)")
-    base_version: str = Field(description="Base firmware version. (P45)")
-    cpe_version: str = Field(description="CPE (TR-069) version. Empty if not provisioned.")
-    uptime: str = Field(description="System uptime string, e.g. '21:06:47 up 22 days'. (P199)")
-    cpu_load: str = Field(description="Current CPU load percentage, e.g. '18%'.")
-    system_status: str = Field(description="System status message. Empty under normal operation.")
-    mac_address: str = Field(description="Device MAC address, e.g. '00:11:22:33:44:55'. (P67)")
+    program_version: Annotated[str, P("P68")] = Field(description="Program (application) firmware version.")
+    boot_version: Annotated[str, P("P69")] = Field(description="Bootloader firmware version.")
+    core_version: Annotated[str, P("P70")] = Field(description="Core firmware version.")
+    base_version: Annotated[str, P("P45")] = Field(description="Base firmware version.")
+    cpe_version: Annotated[str, P("cpe_version")] = Field(description="CPE (TR-069) version. Empty if not provisioned.")
+    uptime: Annotated[str, P("P199")] = Field(description="System uptime string, e.g. '21:06:47 up 22 days'.")
+    cpu_load: Annotated[str, P("cpu_load")] = Field(description="Current CPU load percentage, e.g. '18%'.")
+    system_status: Annotated[str, P("system_status")] = Field(description="System status message. Empty under normal operation.")
+    mac_address: Annotated[str, P("P67")] = Field(description="Device MAC address, e.g. '00:11:22:33:44:55'.")
 
 
 class NetworkStatus(BaseModel):
     """Network connectivity status from the Status > Network Status page."""
 
-    mac_address: str = Field(description="Device MAC address.")
-    ipv4_address: str = Field(
+    mac_address: Annotated[str, P("mac_display")] = Field(description="Device MAC address.")
+    ipv4_address: Annotated[str, P("P121")] = Field(
         description=(
             "IPv4 address info. May contain multiple addresses separated by whitespace, "
-            "e.g. 'MANAGE -- 10.0.0.1    SERVICE -- 10.0.0.2'. (P121)"
+            "e.g. 'MANAGE -- 10.0.0.1    SERVICE -- 10.0.0.2'."
         )
     )
-    ipv6_address: str = Field(description="IPv6 address. Empty if IPv6 is not configured.")
-    vpn_ipv4: str = Field(description="VPN IPv4 address. Empty if no VPN is active.")
-    vpn_ipv6: str = Field(description="VPN IPv6 address. Empty if no VPN is active.")
-    cable_status: str = Field(description="Ethernet cable status, e.g. 'Up 100Mbps Full'.")
-    pppoe_link_up: str = Field(description="PPPoE link status, e.g. 'Disabled'. (P211)")
-    nat: str = Field(description="Detected NAT type, e.g. 'Unknown NAT'. (P80)")
-    certificate_type: str = Field(description="TLS certificate type in use, e.g. 'ECDSA+SHA384'.")
-    system_status: str = Field(description="System status message. Empty under normal operation.")
+    ipv6_address: Annotated[str, P("ipv6_addr")] = Field(description="IPv6 address. Empty if IPv6 is not configured.")
+    vpn_ipv4: Annotated[str, P("vpn_ip")] = Field(description="VPN IPv4 address. Empty if no VPN is active.")
+    vpn_ipv6: Annotated[str, P("vpn_ip6")] = Field(description="VPN IPv6 address. Empty if no VPN is active.")
+    cable_status: Annotated[str, P("net_cable_status")] = Field(description="Ethernet cable status, e.g. 'Up 100Mbps Full'.")
+    pppoe_link_up: Annotated[str, P("P211")] = Field(description="PPPoE link status, e.g. 'Disabled'.")
+    nat: Annotated[str, P("P80")] = Field(description="Detected NAT type, e.g. 'Unknown NAT'.")
+    certificate_type: Annotated[str, P("cert_gen")] = Field(description="TLS certificate type in use, e.g. 'ECDSA+SHA384'.")
+    system_status: Annotated[str, P("system_status")] = Field(description="System status message. Empty under normal operation.")
 
 
 class PortStatus(BaseModel):
     """Status of a single FXS port from the Status > Port Status page."""
 
     port: int = Field(description="FXS port number (1 or 2).")
-    hook: str = Field(description="Hook state: 'On Hook' or 'Off Hook'.")
-    sip_user_id: str = Field(
-        description="SIP User ID (phone number) registered on this port. "
-        "(P35 for port 1, P735 for port 2)"
+    hook: Annotated[str, P("P4901", "P4902")] = Field(description="Hook state: 'On Hook' or 'Off Hook'.")
+    sip_user_id: Annotated[str, P("P35", "P735")] = Field(
+        description="SIP User ID (phone number) registered on this port."
     )
-    registration: str = Field(
+    registration: Annotated[str, P("P4921", "P4922")] = Field(
         description="SIP registration state: 'Registered', 'Not Registered', etc."
     )
-    sip_port: str = Field(description="Local SIP port number, e.g. '5060'.")
+    sip_port: Annotated[str, P("sip_port_0", "sip_port_1")] = Field(description="Local SIP port number, e.g. '5060'.")
 
 
 class BaseInfo(BaseModel):

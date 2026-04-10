@@ -24,55 +24,13 @@ from .models import (
     PortStatus,
     SystemInfo,
     SystemProcessInfo,
-    port_params,
-    port_values,
+    model_params,
+    model_values,
 )
 
 logger = logging.getLogger(__name__)
 
 REQUEST_TIMEOUT = 5.0
-
-# P-parameters for System Info page
-_SYSTEM_INFO_PARAMS = [
-    "P89",
-    "serial_number",
-    "P917",
-    "tmp_fact_cfg_ver_str",
-    "P68",
-    "P69",
-    "P70",
-    "P45",
-    "cpe_version",
-    "P199",
-    "cpu_load",
-    "system_status",
-]
-
-# P-parameters for Network Status page
-_NETWORK_STATUS_PARAMS = [
-    "mac_display",
-    "P121",
-    "ipv6_addr",
-    "vpn_ip",
-    "vpn_ip6",
-    "net_cable_status",
-    "P211",
-    "P80",
-    "cert_gen",
-    "system_status",
-]
-
-# P-parameters for Port Status (port 1 and port 2 core fields)
-_PORT_STATUS_PARAMS = [
-    "P4901",
-    "P35",
-    "P4921",
-    "sip_port_0",
-    "P4902",
-    "P735",
-    "P4922",
-    "sip_port_1",
-]
 
 
 class HT802Error(Exception):
@@ -238,60 +196,27 @@ class HT802Client:
 
     # --- system info ---
 
+    async def _get_model_values[T: BaseModel](self, model: type[T]) -> T:
+        """Generic helper: fetch P-params for a 1:1 model and construct it."""
+        values = await self.get_values(model_params(model))
+        return model(**model_values(model, values))
+
     async def get_system_info(self) -> SystemInfo:
         """Get system info (Status > System Info page)."""
-        values = await self.get_values(_SYSTEM_INFO_PARAMS)
-        mac_values = await self.get_values(["P67"])
-        return SystemInfo(
-            product_model=values.get("P89", ""),
-            serial_number=values.get("serial_number", ""),
-            hardware_version=values.get("P917", ""),
-            factory_config_version=values.get("tmp_fact_cfg_ver_str", ""),
-            program_version=values.get("P68", ""),
-            boot_version=values.get("P69", ""),
-            core_version=values.get("P70", ""),
-            base_version=values.get("P45", ""),
-            cpe_version=values.get("cpe_version", ""),
-            uptime=values.get("P199", ""),
-            cpu_load=values.get("cpu_load", ""),
-            system_status=values.get("system_status", ""),
-            mac_address=mac_values.get("P67", ""),
-        )
+        return await self._get_model_values(SystemInfo)
 
     async def get_network_status(self) -> NetworkStatus:
         """Get network status (Status > Network Status page)."""
-        values = await self.get_values(_NETWORK_STATUS_PARAMS)
-        return NetworkStatus(
-            mac_address=values.get("mac_display", ""),
-            ipv4_address=values.get("P121", ""),
-            ipv6_address=values.get("ipv6_addr", ""),
-            vpn_ipv4=values.get("vpn_ip", ""),
-            vpn_ipv6=values.get("vpn_ip6", ""),
-            cable_status=values.get("net_cable_status", ""),
-            pppoe_link_up=values.get("P211", ""),
-            nat=values.get("P80", ""),
-            certificate_type=values.get("cert_gen", ""),
-            system_status=values.get("system_status", ""),
-        )
+        return await self._get_model_values(NetworkStatus)
 
     async def get_port_status(self) -> list[PortStatus]:
         """Get FXS port status (Status > Port Status page)."""
-        values = await self.get_values(_PORT_STATUS_PARAMS)
+        # PortStatus uses port-dependent P-params, so fetch both ports' params in one call
+        all_params = model_params(PortStatus, port=1) + model_params(PortStatus, port=2)
+        values = await self.get_values(all_params)
         return [
-            PortStatus(
-                port=1,
-                hook=values.get("P4901", ""),
-                sip_user_id=values.get("P35", ""),
-                registration=values.get("P4921", ""),
-                sip_port=values.get("sip_port_0", ""),
-            ),
-            PortStatus(
-                port=2,
-                hook=values.get("P4902", ""),
-                sip_user_id=values.get("P735", ""),
-                registration=values.get("P4922", ""),
-                sip_port=values.get("sip_port_1", ""),
-            ),
+            PortStatus(port=1, **model_values(PortStatus, values, port=1)),
+            PortStatus(port=2, **model_values(PortStatus, values, port=2)),
         ]
 
     async def get_base_info(self) -> BaseInfo:
@@ -327,10 +252,10 @@ class HT802Client:
             raise HT802Error(f"Invalid port number: {port}. Must be 1 or 2.")
 
     async def _get_port_settings[T: BaseModel](self, model: type[T], port: int) -> T:
-        """Generic helper: fetch P-params for a port and construct the model."""
+        """Generic helper: fetch P-params for a port-dependent model and construct it."""
         self._validate_port(port)
-        values = await self.get_values(port_params(model, port))
-        return model(port=port, **port_values(model, port, values))
+        values = await self.get_values(model_params(model, port))
+        return model(port=port, **model_values(model, values, port))
 
     async def get_port_general(self, port: int) -> PortGeneralSettings:
         return await self._get_port_settings(PortGeneralSettings, port)
