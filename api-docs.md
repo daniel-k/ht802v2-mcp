@@ -385,7 +385,7 @@ P7901, P7902, P7903
 
 **Response:**
 | P-param  | Value       | Display Name                         | Type | Options/Range | Tooltip |
-|----------|-------------|--------------------------------------|------|------------------------|
+|----------|-------------|--------------------------------------|------|------------|------------|
 | `P1415`  | `2`         | Ethernet Settings                    | enum | 2=IPv4 Only, 3=IPv6 Only, 0=Both, prefer IPv4, 1=Both, prefer IPv6 | Internet Protocol |
 | `P8`     | `0`         | IPv4 Address Type (0=DHCP, 1=Static, 2=PPPoE) | enum | 0=Auto-configured, 2=Use PPPoE, 1=Statically configured | Configures how the IPv4 address is obtained on the device. |
 | `P146`   | `""`        | Host Name (Option 12)                | string |  | Specifies the name of the client. This field is optional but may be required by Internet Service Providers. |
@@ -435,7 +435,7 @@ P1684, P22122, P22119, P51, P5038, P5042, P1564, P8512, P475, P244, P28115
 
 **Response:**
 | P-param   | Value  | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|--------|---------------------------------------|------|------------------------|
+|-----------|--------|---------------------------------------|------|------------|------------|
 | `P1684`   | `1`    | Advanced Settings                     | boolean | 0=No, 1=Yes | Controls the LLDP (Link Layer Discovery Protocol) service. |
 | `P22122`  | `60`   | LLDP TX Interval                      | int |  | Configures LLDP TX Interval (in seconds). Valid range is 1 to 3600. |
 | `P22119`  | `1`    | Enable CDP                            | boolean | 0=No, 1=Yes | If enabled, the device will use the Cisco Discovery Protocol feature. |
@@ -481,7 +481,7 @@ P28121, P28122, P28123, P28124, P28125, P28126
 
 **Response:**
 | P-param   | Value  | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|--------|---------------------------------------|------|------------------------|
+|-----------|--------|---------------------------------------|------|------------|------------|
 | `P28121`  | `0`    | DDNS Settings                         | boolean | 0=No, 1=Yes | Enable DDNS function |
 | `P28122`  | `0`    | DDNS Server                           | enum | 0=dyndns.org, 1=freedns.afraid.org, 2=zoneedit.com, 3=no-ip.com, 4=oray.net, ... | Select DDNS server |
 | `P28123`  | `""`   | DDNS Username                         | string |  | Set the username of the DDNS server |
@@ -501,7 +501,7 @@ P20717, P20725, P8394, P8395, P20715, P22457, P8460
 
 **Response:**
 | P-param   | Value    | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|----------|---------------------------------------|------|------------------------|
+|-----------|----------|---------------------------------------|------|------------|------------|
 | `P7050`   | `0`      | OpenVPN Settings                      | boolean | 0=No, 1=Yes | Enable/Disable the OpenVPN® feature. |
 | `P7051`   | `""`     | OpenVPN Server Address                | string |  | Address of OpenVPN® server |
 | `P7052`   | `1194`   | OpenVPN Port                          | int |  | Port of OpenVPN® server |
@@ -530,7 +530,7 @@ P253, P277, P28127, P88, P28181, P8457, P76, P84, P474
 
 **Response:**
 | P-param   | Value                    | Display Name                           | Type | Options/Range | Tooltip |
-|-----------|--------------------------|----------------------------------------|------|------------------------|
+|-----------|--------------------------|----------------------------------------|------|------------|------------|
 | `P253`    | `0`                      | Basic Settings                         | boolean | 0=No, 1=Yes |  |
 | `P277`    | `0`                      | Enable Direct IP Call                  | boolean | 0=No, 1=Yes |  |
 | `P28127`  | `""`                     | Blocklist For Incoming Calls           | string |  | Block calls from specific numbers. Use , to separate numbers |
@@ -552,7 +552,7 @@ P30, P8333, P144, P64, P246, P143, P342
 
 **Response:**
 | P-param | Value                                              | Display Name                                        | Type | Options/Range | Tooltip |
-|---------|----------------------------------------------------|-----------------------------------------------------|------|------------------------|
+|---------|----------------------------------------------------|-----------------------------------------------------|------|------------|------------|
 | `P30`   | `pool.ntp.org`                                     | NTP Server                                          | string |  | Configures the URL or IP address of the NTP server. The device may obtain the date and time from the server. |
 | `P8333` | `""`                                               | Secondary NTP Server                                | string |  | Configures the URL or IP address of the NTP server. The device may obtain the date and time from the server. |
 | `P144`  | `1`                                                | Allow DHCP Option 42 to Override NTP Server         | boolean | 0=No, 1=Yes | When enabled, DHCP Option 42 will override the NTP server if it is set up on the LAN. |
@@ -572,7 +572,7 @@ P4040, P4042, P4000, P4001, P4002, P4003, P4004, P4005, P4041, P28133, P28196, P
 
 **Response:**
 | P-param   | Value                                              | Display Name                    | Type | Options/Range | Tooltip |
-|-----------|----------------------------------------------------|---------------------------------|------|------------------------|
+|-----------|----------------------------------------------------|---------------------------------|------|------------|------------|
 | `P4040`   | `c=2000/4000;`                                     | Ringtone                        | string |  | Cadence on+off value range (0, 16000) milliseconds |
 | `P4042`   | `""`                                               | Prompt Tone Access Code         | string |  | Key pattern to get Prompt Tone. Maximum 20 digits. No default. |
 | `P4000`   | `f1=350@-17,f2=440@-17,c=0/0;`                    | Dial Tone                       | string |  |  |
@@ -598,7 +598,7 @@ P276, P27006, P28163, P28120, P28128, P28164, P28210, P20701, P20702
 
 **Response:**
 | P-param   | Value  | Display Name                              | Type | Options/Range | Tooltip |
-|-----------|--------|-------------------------------------------|------|------------------------|
+|-----------|--------|-------------------------------------------|------|------------|------------|
 | `P1650`   | `1`    | Web Access Mode                           | enum | 0=HTTPS, 1=HTTP, 2=Disabled | Sets the protocol for the web interface. |
 | `P901`    | `80`   | HTTP Web Port                             | int |  | default is 80 |
 | `P27010`  | `443`  | HTTPS Web Port                            | int |  | default is 443 |
@@ -634,7 +634,7 @@ P28788, P28790, P28791, P28792
 
 **Response:**
 | P-param   | Value | Display Name                       | Type | Options/Range | Tooltip |
-|-----------|-------|------------------------------------|------|------------------------|
+|-----------|-------|------------------------------------|------|------------|------------|
 | `P28788`  | `1`   | Enable strict password rules       | boolean | 0=No, 1=Yes | Enable strict password rules. Non admin users cannot edit |
 | `P28790`  | `8`   | Minimum password length            | int |  | Range: 4-30, default is 8. Non admin users cannot edit |
 | `P28791`  | `3`   | Required number of character classes| int |  | Set the minimum number of character classes that a password should contain, composed of allowed combinations of different character classes;Range: 0-4, default is 3. Non admin users cannot edit |
@@ -651,7 +651,7 @@ P8536, P22293, P22294
 
 **Response:**
 | P-param   | Value | Display Name                         | Type | Options/Range | Tooltip |
-|-----------|-------|--------------------------------------|------|------------------------|
+|-----------|-------|--------------------------------------|------|------------|------------|
 | `P8536`   | `0`   | Enable/Disable Weak Cipher Suites    | enum | 0=Enable Weak TLS Ciphers Suites, 1=Disable Symmetric Encryption RC4/DES/3DES... |  |
 | `P22293`  | `99`  | Minimum TLS Version                  | enum | 99=Unlimited, 10=TLS, 11=TLS, 12=TLS, 13=TLS | Configures the minimum TLS version supported by the device. Minimum TLS version must be less than or equal to maximum TLS version. |
 | `P22294`  | `99`  | Maximum TLS Version                  | enum | 99=Unlimited, 10=TLS, 11=TLS, 12=TLS, 13=TLS | Configures the maximum TLS version supported by the device. Maximum TLS version must be greater than or equal to minimum TLS version. |
@@ -667,7 +667,7 @@ P8502
 
 **Response:**
 | P-param | Value | Display Name                     | Type | Options/Range | Tooltip |
-|---------|-------|----------------------------------|------|------------------------|
+|---------|-------|----------------------------------|------|------------|------------|
 | `P8502` | `0`   | Trusted CA Certificates          | enum | 0=Built-in trusted certificates, 1=Custom trusted certificates, 2=All trusted... | The device will verify the server certificate based on the built-in, custom or both trusted certificates list. |
 
 ---
@@ -683,7 +683,7 @@ P1409, P4503, P4504, P4505, P4506, P4507, P4511, P4512, P4518, P8220, P8221
 
 **Response:**
 | P-param  | Value                              | Display Name                  | Type | Options/Range | Tooltip |
-|----------|------------------------------------|-------------------------------|------|------------------------|
+|----------|------------------------------------|-------------------------------|------|------------|------------|
 | `P1409`  | `0`                                | Management Settings           | boolean | 0=No, 1=Yes | Configure whether to enable TR-069 |
 | `P4503`  | `https://acsguestb.gdms.cloud`     | ACS URL                       | string |  | Configure the URL or IP address of the TR-069 automatic configuration server(ACS). For example: http: //acs.mycompany.com, or IP address. Note: The protocol header http or https must be included |
 | `P4504`  | `""`                               | TR-069 Username               | string |  | Configure the user name used by ACS to authenticate the TR-069 client, that is, the device when the device initiates a connection request to ACS. This user name must be consistent with the configur... |
@@ -710,7 +710,7 @@ P21900, P21905, P21910, P21906, P21907, P21911, P21916, P21912, P21913
 
 **Response:**
 | P-param   | Value | Display Name                      | Type | Options/Range | Tooltip |
-|-----------|-------|-----------------------------------|------|------------------------|
+|-----------|-------|-----------------------------------|------|------------|------------|
 | `P21896`  | `0`   | SNMP Settings                     | boolean | 0=No, 1=Yes | Configures whether to enable/disable the SNMP feature. |
 | `P21904`  | `3`   | SNMP Version                      | enum | 1=Version 1, 2=Version 2c, 3=Version 3 | Specifies the SNMP version |
 | `P21903`  | `161` | SNMP Port                         | int |  | Specifies the SNMP Port. Default is 161. Range is 161 or 1025-65535. |
@@ -741,7 +741,7 @@ P22111, P22112, P22105, P22106, P22107, P22108, P22109, P22110
 
 **Response:**
 | P-param   | Value             | Display Name                             | Type | Options/Range | Tooltip |
-|-----------|-------------------|------------------------------------------|------|------------------------|
+|-----------|-------------------|------------------------------------------|------|------------|------------|
 | `P28161`  | `1`               | Management Interface                     | boolean | 0=No, 1=Yes | A network interface that serves the HTTP/HTTPS/SSH/TELNET protocol. If the management vlan is configured and is different from the service vlan, the management network port will be a vlan network p... |
 | `P28162`  | `1`               | Management Access                        | enum | 0=Management Interface Only, 1=Both Service and Management Interfaces | Specify which network port can be used for HTTP/HTTPS/SSH/TELNET protocol |
 | `P28209`  | `1`               | Enable SNMP Through Management Interface | boolean | 0=No, 1=Yes | Configure routing so that SNMP functionality is accessible through management |
@@ -768,7 +768,7 @@ P28107, P28114, P28930, P28803, P28108, P28109, P28110, P28111, P28112
 
 **Response:**
 | P-param   | Value  | Display Name                             | Type | Options/Range | Tooltip |
-|-----------|--------|------------------------------------------|------|------------------------|
+|-----------|--------|------------------------------------------|------|------------|------------|
 | `P28107`  | `0`    | RADIUS Settings                          | boolean | 0=No, 1=Yes | Select whether to enable RADIUS web access control. Default is no |
 | `P28114`  | `1`    | Action upon Radius Auth Server Error     | enum | 0=Reject Access, 1=Authenticate Locally |  |
 | `P28930`  | `0`    | Enable Bypass Locked State               | boolean | 0=No, 1=Yes | Once enabled, RADIUS accounts can bypass the webUI locked state caused by local accounts. |
@@ -793,7 +793,7 @@ P8568, P8569, P8570, P8571, P8572, P8573
 
 **Response:**
 | P-param   | Value                            | Display Name                     | Type | Options/Range | Tooltip |
-|-----------|----------------------------------|----------------------------------|------|------------------------|
+|-----------|----------------------------------|----------------------------------|------|------------|------------|
 | `P8565`   | `0`                              | Enable E911                      | boolean | 0=No, 1=Yes | Enable Enhanced 911 call |
 | `P8597`   | `911`                            | E911 Emergency Numbers           | int |  |  |
 | `P8598`   | `0`                              | Geolocation-Routing Header       | boolean | 0=No, 1=Yes |  |
@@ -844,7 +844,7 @@ P2308, P2309, P2310, P52, P101, P197
 
 **Response:**
 | P-param   | Value                | Display Name                      | Type | Options/Range | Tooltip |
-|-----------|----------------------|-----------------------------------|------|------------------------|
+|-----------|----------------------|-----------------------------------|------|------------|------------|
 | `P271`    | `1`                  | Account Active                    | int |  | Indicates whether the account is active. |
 | `P47`     | `192.168.1.100`      | Primary SIP Server                | string |  | The URL or IP address, and port of the SIP server. This is provided by your VoIP service provider (e.g., sip.mycompany.com, or IP address) |
 | `P967`    | `""`                 | Failover SIP Server               | string |  | Optional, used when primary server no response |
@@ -891,7 +891,7 @@ P267, P265, P28744
 
 **Response (key fields):**
 | P-param   | Value  | Display Name                                              | Type | Options/Range | Tooltip |
-|-----------|--------|-----------------------------------------------------------|------|------------------------|
+|-----------|--------|-----------------------------------------------------------|------|------------|------------|
 | `P31`     | `1`    | SIP Registration                                          | boolean | 0=No, 1=Yes | Selects whether the device will send SIP REGISTER messages to the proxy/server. |
 | `P130`    | `0`    | SIP Transport                                             | enum | 0=UDP, 1=TCP, 2=TLS | Set the network protocol used for SIP message transmission. |
 | `P81`     | `0`    | Unregister On Reboot                                      | enum | 0=No, 1=All, 2=Instance |  |
@@ -954,7 +954,7 @@ P267, P265, P28744
 
 SIP Ports response:
 | P-param | Value  | Display Name                | Type | Options/Range | Tooltip |
-|---------|--------|-----------------------------|------|------------------------|
+|---------|--------|-----------------------------|------|------------|------------|
 | `P40`   | `5060` | Port 1 Local SIP Port       | int |  | Configures the local SIP port used to listen and transmit. |
 | `P640`  | `7060` | Port 1 Local SIP TLS Port   | int |  | Configures the local SIP port used to listen and transmit. |
 | `P740`  | `5062` | Port 2 Local SIP Port       | int |  | Configures the local SIP port used to listen and transmit. |
@@ -975,7 +975,7 @@ P291, P2392, P28839, P183, P2383, P26093, P26094, P26095
 
 **Response:**
 | P-param   | Value  | Display Name                                         | Type | Options/Range | Tooltip |
-|-----------|--------|------------------------------------------------------|------|------------------------|
+|-----------|--------|------------------------------------------------------|------|------------|------------|
 | `P850`    | `101`  | Codec Settings                                       | int |  |  |
 | `P851`    | `102`  | (Preferred Codec Choice 2)                           | int |  |  |
 | `P852`    | `100`  | (Preferred Codec Choice 3)                           | int |  |  |
@@ -1045,7 +1045,7 @@ P28165, P4424, P251, P252, P833, P247, P249, P824, P4429, P4234, P28192
 
 **Response:**
 | P-param   | Value  | Display Name                                          | Type | Options/Range | Tooltip |
-|-----------|--------|-------------------------------------------------------|------|------------------------|
+|-----------|--------|-------------------------------------------------------|------|------------|------------|
 | `P854`    | `9`    | Analog Signal Line Configuration                      | int |  | Select the area for SLIC configuration |
 | `P853`    | `1`    | Caller ID Scheme                                      | int |  | Select caller ID mechanism |
 | `P4661`   | `0`    | DTMF Caller ID                                        | int |  |  |
@@ -1081,7 +1081,7 @@ P185, P2324, P28153, P29073, P29096, P1406, P20525
 
 **Response:**
 | P-param   | Value  | Display Name                               | Type | Options/Range | Tooltip |
-|-----------|--------|--------------------------------------------|------|------------------------|
+|-----------|--------|--------------------------------------------|------|------------|------------|
 | `P71`     | (val)  | Off-hook Auto Dial                         |  |  | User ID/extension to dial automatically when offhook |
 | `P4045`   | (val)  | Offhook Auto-Dial Delay                    | int |  | 0-60 seconds, default is 0 |
 | `P85`     | `4`    | No Key Entry Timeout                       | int |  | Configures the timeout (in seconds) for no key entry. If no key is pressed after the timeout, the collected digits will be sent out. |
@@ -1129,7 +1129,7 @@ P198, P2318, P26015, P4340, P258, P2346, P243, P2311, P60082, P2367
 
 **Response:**
 | P-param   | Value  | Display Name                              | Type | Options/Range | Tooltip |
-|-----------|--------|-------------------------------------------|------|------------------------|
+|-----------|--------|-------------------------------------------|------|------------|------------|
 | `P198`    | `100`  | Special Feature                           | int |  | Specifies the server type for special requirements. |
 | `P2318`   | `""`   | Conference URI                            | string |  | Configures the conference URI when using BroadSoft N-way calling feature. |
 | `P26015`  | `0`    | Allow SIP Reset                           | int |  |  |
@@ -1153,7 +1153,7 @@ P191, P24199, P24060, P24001..P24089 (call feature code table)
 **Response:** This is a feature code table. `P191` = `1` (Call Features Settings). Each feature has an enable flag and a star-code:
 
 | P-param   | Value   | Display Name                     | Type | Options/Range | Tooltip |
-|-----------|---------|----------------------------------|------|------------------------|
+|-----------|---------|----------------------------------|------|------------|------------|
 | `P191`    | `1`     | Call Features Settings           | int |  | When enabled, Do No Disturb, Call Forward and other call features can be used via the local feature codes on the device. Otherwise, the ITSP feature codes will be used. Enable All will override all... |
 | `P24199`  | `0`     | Reset Call Features              | boolean | 0=No, 1=Yes | Whether to enable the reset call function |
 | `P24060`  | `1`     | SRTP Feature                     | boolean | 0=No, 1=Yes | Whether to enable SRTP (Real-time Transport Protocol) |
@@ -1230,7 +1230,7 @@ P29074..P29089
 
 **Response:**
 | P-param   | Value                         | Display Name                           | Type | Options/Range | Tooltip |
-|-----------|-------------------------------|----------------------------------------|------|------------------------|
+|-----------|-------------------------------|----------------------------------------|------|------------|------------|
 | `P870`    | `0`                           | Custom Ring Tone 1                     | int |  | If the caller number matches, a custom ringtone will be used |
 | `P871`    | `""`                          | Custom Ring Tone 1 will be used when the caller is | string |  | Set the caller ID using custom ringtone 1 |
 | `P872`    | `0`                           | Custom Ring Tone 2                     | int |  | If the caller number matches, a custom ringtone will be used |
@@ -1279,7 +1279,7 @@ Port 2 mirrors Port 1 general with offset P-parameter numbers.
 
 **Response:**
 | P-param   | Value  | Display Name                      | Type | Options/Range | Tooltip |
-|-----------|--------|-----------------------------------|------|------------------------|
+|-----------|--------|-----------------------------------|------|------------|------------|
 | `P401`    | `0`    | Account Active                    | int |  | Indicates whether the account is active. |
 | `P747`    | `""`   | Primary SIP Server                | string |  | The URL or IP address, and port of the SIP server. This is provided by your VoIP service provider (e.g., sip.mycompany.com, or IP address) |
 | `P987`    | `""`   | Failover SIP Server               | string |  | Optional, used when primary server no response |
@@ -1325,7 +1325,7 @@ Port 2 SIP settings mirror Port 1 with different P-values.
 
 **Response (key fields):**
 | P-param   | Value  | Display Name                                              | Type | Options/Range | Tooltip |
-|-----------|--------|-----------------------------------------------------------|------|------------------------|
+|-----------|--------|-----------------------------------------------------------|------|------------|------------|
 | `P731`    | `1`    | SIP Registration                                          | boolean | 0=No, 1=Yes | Selects whether the device will send SIP REGISTER messages to the proxy/server. |
 | `P830`    | `0`    | SIP Transport                                             | enum | 0=UDP, 1=TCP, 2=TLS | Set the network protocol used for SIP message transmission. |
 | `P752`    | `0`    | Unregister On Reboot                                      | enum | 0=No, 1=All, 2=Instance |  |
@@ -1368,7 +1368,7 @@ Port 2 codec mirrors Port 1 codec with different P-values.
 
 **Response (key fields):**
 | P-param   | Value  | Display Name                                         | Type | Options/Range | Tooltip |
-|-----------|--------|------------------------------------------------------|------|------------------------|
+|-----------|--------|------------------------------------------------------|------|------------|------------|
 | `P860`    | `101`  | Preferred DTMF                                       | int |  |  |
 | `P861`    | `102`  | (Preferred Codec Choice 2)                           | int |  |  |
 | `P862`    | `100`  | (Preferred Codec Choice 3)                           | int |  |  |
@@ -1427,7 +1427,7 @@ P28166, P4425, P811, P812, P834, P248, P283, P825, P4430, P4235, P28193
 
 **Response:**
 | P-param   | Value  | Display Name                                          | Type | Options/Range | Tooltip |
-|-----------|--------|-------------------------------------------------------|------|------------------------|
+|-----------|--------|-------------------------------------------------------|------|------------|------------|
 | `P864`    | `0`    | Analog Signal Line Configuration                      | int |  | Select the impedance used by the PSTN service provider |
 | `P863`    | `0`    | Caller ID Scheme                                      | int |  | Select caller ID mechanism |
 | `P4663`   | `0`    | DTMF Caller ID                                        | int |  |  |
@@ -1463,7 +1463,7 @@ P816, P2424, P28154, P29173, P29196, P4895, P20526
 
 **Response:**
 | P-param   | Value                              | Display Name                               | Type | Options/Range | Tooltip |
-|-----------|------------------------------------|--------------------------------------------|------|------------------------|
+|-----------|------------------------------------|--------------------------------------------|------|------------|------------|
 | `P771`    | `""`                               | Off-hook Auto Dial                         |  |  | User ID/extension to dial automatically when offhook |
 | `P4046`   | `0`                                | Offhook Auto-Dial Delay                    | int |  | 0-60 seconds, default is 0 |
 | `P292`    | `4`                                | Inter-Digit Timeout (sec)                  | int |  | Configures the timeout (in seconds) for no key entry. If no key is pressed after the timeout, the collected digits will be sent out. |
@@ -1511,7 +1511,7 @@ P767, P2418, P26115, P4341, P449, P2446, P743, P2411, P60182, P2467
 
 **Response:**
 | P-param   | Value  | Display Name                              | Type | Options/Range | Tooltip |
-|-----------|--------|-------------------------------------------|------|------------------------|
+|-----------|--------|-------------------------------------------|------|------------|------------|
 | `P767`    | `100`  | Special Feature                           | int |  | Specifies the server type for special requirements. |
 | `P2418`   | `""`   | Conference URI                            |  |  |  |
 | `P26115`  | `0`    | Allow SIP Reset                           | int |  |  |
@@ -1543,7 +1543,7 @@ Port 2 call features mirror Port 1 with offset P-numbers (P24000→P24200, P2406
 
 **Response:**
 | P-param   | Value   | Display Name                     | Type | Options/Range | Tooltip |
-|-----------|---------|----------------------------------|------|------------------------|
+|-----------|---------|----------------------------------|------|------------|------------|
 | `P751`    | `1`     | Enable Local Call Features       | boolean | 0=No, 1=Yes | When enabled, Do No Disturb, Call Forward and other call features can be used via the local feature codes on the device. Otherwise, the ITSP feature codes will be used. Enable All will override all... |
 | `P24399`  | `0`     | Reset Call Features              | boolean | 0=No, 1=Yes | Whether to enable the reset call function |
 | `P24260`  | `1`     | SRTP Feature                     | boolean | 0=No, 1=Yes | Whether to enable SRTP (Real-time Transport Protocol) |
@@ -1622,7 +1622,7 @@ Port 2 tone mirrors Port 1 with offset P-numbers (P870→P880, P4010→P4030, P2
 
 **Response:**
 | P-param   | Value                         | Display Name                    | Type | Options/Range | Tooltip |
-|-----------|-------------------------------|---------------------------------|------|------------------------|
+|-----------|-------------------------------|---------------------------------|------|------------|------------|
 | `P880`    | `0`                           | Custom Ring Tone 1              | boolean | 0=No, 1=Yes | If the caller number matches, a custom ringtone will be used |
 | `P881`    | `""`                          | Custom Ring Tone 1 will be used when the caller is | string |  | Set the caller ID using custom ringtone 1 |
 | `P882`    | `0`                           | Custom Ring Tone 2              | boolean | 0=No, 1=Yes | If the caller number matches, a custom ringtone will be used |
@@ -1669,7 +1669,7 @@ P6767, P192, P6768, P6769, P232, P233
 
 **Response:**
 | P-param  | Value                      | Display Name                     | Type | Options/Range | Tooltip |
-|----------|----------------------------|----------------------------------|------|------------------------|
+|----------|----------------------------|----------------------------------|------|------------|------------|
 | `P6767`  | `2`                        | Firmware Upgrade via             | enum | 0=TFTP, 1=HTTP, 2=HTTPS, 3=FTP, 4=FTPS | Allows users to choose the firmware upgrade method via TFTP, HTTP, HTTPS, FTP or FTPS. |
 | `P192`   | `fm.grandstream.com/gs`    | Firmware Server Path             | string |  | Defines the server path for the firmware server. |
 | `P6768`  | `""`                       | Firmware Server Username         | string |  | The username for the firmware server. |
@@ -1688,7 +1688,7 @@ P212, P237, P1360, P1361, P1359, P234, P235, P20713, P240
 
 **Response:**
 | P-param   | Value                     | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|---------------------------|---------------------------------------|------|------------------------|
+|-----------|---------------------------|---------------------------------------|------|------------|------------|
 | `P212`    | `2`                       | Config File                           | int |  | Allows users to choose the config upgrade method via TFTP, HTTP, HTTPS, FTP or FTPS. |
 | `P237`    | `fm.grandstream.com/gs`   | Config Server Path                    | string |  | Defines the server path for provisioning. |
 | `P1360`   | `""`                      | Config Server Username                |  |  | The username for the config server. |
@@ -1711,7 +1711,7 @@ P8458, P238, P8467, P8501
 
 **Response:**
 | P-param   | Value                                    | Display Name                            | Type | Options/Range | Tooltip |
-|-----------|------------------------------------------|-----------------------------------------|------|------------------------|
+|-----------|------------------------------------------|-----------------------------------------|------|------------|------------|
 | `P145`    | `1`                                      | Provision                               | boolean | 0=No, 1=Yes | When enabled, the upgrade method and the server path of the firmware/config provisioning will be reset according to option 43/66/160 sent by the DHCP server |
 | `P1414`   | `1`                                      | Auto Provision                          | boolean | 0=No, 1=Yes | When enabled, the device sends SUBSCRIBE in multicast mode. If 3CX, UCM and other IPPBX servers are used as SIP servers, the device can be automatically configured. |
 | `P8609`   | `0`                                      | Enable using tags in URL                | boolean | 0=No, 1=Yes | Enable the use of labels in profile server paths |
@@ -1737,7 +1737,7 @@ P22030, P8601, P4428, P8463
 
 **Response:**
 | P-param  | Value  | Display Name                          | Type | Options/Range | Tooltip |
-|----------|--------|---------------------------------------|------|------------------------|
+|----------|--------|---------------------------------------|------|------------|------------|
 | `P22030` | `0`    | Advanced Settings                     | boolean | 0=No, 1=Yes | Configures to validate the hostname in the SSL certificate. |
 | `P8601`  | `47`   | Configuration File Types Allowed      | enum | 47=All, 46=XML only | Allowed configuration file types, all or XML only. |
 | `P4428`  | `0`    | Enable SIP NOTIFY Authentication      | boolean | 0=No, 1=Yes |  |
@@ -1756,7 +1756,7 @@ CDR is retrieved via GET `/cgi-bin/api-get_cdr` and GET `/cgi-bin/api-preview_cd
 
 **Response:**
 | P-param   | Value  | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|--------|---------------------------------------|------|------------------------|
+|-----------|--------|---------------------------------------|------|------------|------------|
 | `P8534`   | `1`    | CDR File Option                       | int |  |  |
 
 CDR record schema:
@@ -1787,7 +1787,7 @@ SIP log existence is checked via GET `/cgi-bin/api-get_sip`.
 
 **Response:**
 | P-param   | Value  | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|--------|---------------------------------------|------|------------------------|
+|-----------|--------|---------------------------------------|------|------------|------------|
 | `P8535`   | `1`    | SIP Messages File Option              | int |  |  |
 
 SIP log check response:
@@ -1806,7 +1806,7 @@ P21929, P21930, P21931, P28118, P88
 
 **Response:**
 | P-param   | Value  | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|--------|---------------------------------------|------|------------------------|
+|-----------|--------|---------------------------------------|------|------------|------------|
 | `P21929`  | `0`    | Automatic restart                     | int |  | When enabled, the device will automatically restart at the configured time. |
 | `P21930`  | `1`    | (Restart schedule - hour)             | int |  |  |
 | `P21931`  | `1`    | (Restart schedule - day)              | int |  |  |
@@ -1824,7 +1824,7 @@ P8489, P8490, P8491
 
 **Response:**
 | P-param   | Value  | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|--------|---------------------------------------|------|------------------------|
+|-----------|--------|---------------------------------------|------|------------|------------|
 | `P8489`   | `0`    | VQ RTCP-XR Session Report             | boolean | 0=No, 1=Yes | When enabled, phone will send a session quality report to the central report collector at the end of each call. |
 | `P8490`   | `0`    | VQ RTCP-XR Interval Report            | boolean | 0=No, 1=Yes | Configures the interval (in seconds) of the device sending an interval quality report to the central report collector periodically throughout a call. |
 | `P8491`   | `4`    | VQ RTCP-XR Interval Report Period     | enum | 1=5, 2=10, 3=15, 4=20 | Configures the interval (in seconds) of the phone sending an interval quality report to the central report collector periodically throughout a call. |
@@ -1840,7 +1840,7 @@ P207, P208, P8402, P8723, P1387
 
 **Response:**
 | P-param   | Value  | Display Name                          | Type | Options/Range | Tooltip |
-|-----------|--------|---------------------------------------|------|------------------------|
+|-----------|--------|---------------------------------------|------|------------|------------|
 | `P207`    | `""`   | System Diagnosis (Syslog Server)      | string |  | Set the IP address or URL of the system log server |
 | `P208`    | `1`    | Syslog Level                          | enum | 0=NONE, 5=EXTRA, 1=DEBUG, 2=INFO, 3=WARNING, 4=ERROR | Set the level of system log. By default, the device does not send any log information. |
 | `P8402`   | `0`    | Syslog Protocol                       | enum | 0=UDP, 1=SSL/TLS | Allows sending syslog through secured TLS protocol to the syslog server<br/>Note: CA verification is required. |
